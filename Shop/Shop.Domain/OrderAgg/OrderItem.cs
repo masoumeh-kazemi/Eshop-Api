@@ -7,7 +7,7 @@ public class OrderItem:BaseEntity
 {
     public OrderItem(long inventoryId, int count, int price)
     {
-        PriceGaurd(price);
+        PriceGuard(price);
         CountGuard(count);
 
         InventoryId = inventoryId;
@@ -28,11 +28,11 @@ public class OrderItem:BaseEntity
 
     public void SetPrice(int newPrice)
     {
-        PriceGaurd(newPrice);
+        PriceGuard(newPrice);
         Price = newPrice;
     }
 
-    public void PriceGaurd(int newPrice)
+    public void PriceGuard(int newPrice)
     {
         if (newPrice < 1)
             throw new InvalidDomainDataException("مبلغ کالا نامعتبر است");
