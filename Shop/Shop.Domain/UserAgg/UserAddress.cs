@@ -8,7 +8,7 @@ public class UserAddress:BaseEntity
     public UserAddress(string shire, string city, string postalCode, string postalAddress, string phoneNumber, string name,
         string family, string nationalCode)
     {
-        Gaurd(shire, city, postalCode, postalAddress, phoneNumber, name,
+        Guard(shire, city, postalCode, postalAddress, phoneNumber, name,
             family, nationalCode);
         Shire = shire;
         City = city;
@@ -33,7 +33,7 @@ public class UserAddress:BaseEntity
     public void Edit(string shire, string city, string postalCode, string postalAddress, string phoneNumber, string name,
         string family, string nationalCode)
     {
-        Gaurd(shire,  city, postalCode, postalAddress, phoneNumber, name, 
+        Guard(shire,  city, postalCode, postalAddress, phoneNumber, name, 
             family, nationalCode);
         Shire = shire;
         City = city;
@@ -51,7 +51,7 @@ public class UserAddress:BaseEntity
         ActiveAddress = true;
     }
 
-    public void Gaurd(string shire, string city, string postalCode, string postalAddress, string phoneNumber, string name,
+    public void Guard(string shire, string city, string postalCode, string postalAddress, string phoneNumber, string name,
         string family, string nationalCode)
     {
         NullOrEmptyDomainDataException.CheckString(shire, nameof(shire)); 

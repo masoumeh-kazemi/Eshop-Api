@@ -19,7 +19,7 @@ public class Seller:AggregateRoot
 
     public Seller(long userId, string shopName, string nationalCode)
     {
-        Gaurd(shopName, nationalCode);
+        Guard(shopName, nationalCode);
         UserId = userId;
         ShopName = shopName;
         NationalCode = nationalCode;
@@ -33,7 +33,7 @@ public class Seller:AggregateRoot
 
     public void Edit(string shopName, string nationalCode)
     {
-        Gaurd(shopName, nationalCode);
+        Guard(shopName, nationalCode);
         ShopName = shopName;
         NationalCode = nationalCode;
     }
@@ -61,7 +61,7 @@ public class Seller:AggregateRoot
             throw new NullOrEmptyDomainDataException("محصول یافت نشد");
         Inventories.Remove(currentInventory);
     }
-    public void Gaurd(string shopNam, string nationalCode)
+    public void Guard(string shopNam, string nationalCode)
     {
         NullOrEmptyDomainDataException.CheckString(shopNam, nameof(shopNam));
         NullOrEmptyDomainDataException.CheckString(nationalCode, nameof(nationalCode));
