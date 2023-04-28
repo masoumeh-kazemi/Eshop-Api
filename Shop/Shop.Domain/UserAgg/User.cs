@@ -43,7 +43,7 @@ public class User:AggregateRoot
     {
         return new User("", "", phoneNumber, email, password, Enums.Gender.None, domainService);
     }
-    public void AddAdress(UserAddress address)
+    public void AddAddress(UserAddress address)
     {
         address.UserId = Id;
         Addresses.Add(address);
