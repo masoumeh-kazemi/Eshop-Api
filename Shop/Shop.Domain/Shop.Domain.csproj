@@ -11,9 +11,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Seller\" />
+    <Folder Include="CategoryAgg\Service\" />
+    <Folder Include="CommentAgg\" />
+    <Folder Include="OrderAgg\Repository\" />
+    <Folder Include="ProductAgg\Repository\" />
+    <Folder Include="RoleAgg\Repository\" />
+    <Folder Include="Seller\Repository\" />
     <Folder Include="OrderAgg\Events\" />
+    <Folder Include="SiteEntites\Repositories\" />
     <Folder Include="UserAgg\Enums\" />
+    <Folder Include="UserAgg\Repository\" />
   </ItemGroup>
 
 </Project>

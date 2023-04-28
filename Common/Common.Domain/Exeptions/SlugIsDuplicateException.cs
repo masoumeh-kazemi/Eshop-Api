@@ -1,6 +1,6 @@
 ﻿namespace Common.Domain.Exeptions;
 
-public class SlugIsDuplicated
+public class SlugIsDuplicateException : Exception
 {
     
 }
