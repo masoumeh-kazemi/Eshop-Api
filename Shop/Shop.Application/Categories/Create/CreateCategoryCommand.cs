@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
-using Common.Application;
+using Common.Applications;
 using Common.Domain.ValueObjects;
 
 namespace Shop.Application.Categories.Create;
 
-public record CreateCategoryCommand(string title, string slug, SeoData seoData) : IBaseCommand;
+public record CreateCategoryCommand(string Title, string Slug, SeoData SeoData) : IBaseCommand;

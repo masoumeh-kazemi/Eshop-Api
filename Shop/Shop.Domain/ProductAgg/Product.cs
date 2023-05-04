@@ -3,6 +3,7 @@ using Common.Domain;
 using Common.Domain.Exeptions;
 using Common.Domain.Utils;
 using Common.Domain.ValueObjects;
+using Shop.Domain.ProductAgg.Services;
 
 namespace Shop.Domain.ProductAgg;
 
@@ -12,14 +13,17 @@ public class Product:AggregateRoot
     {
 
     }
-    public Product(string title, string imageName, string description, long categoryId, long subCategroyId, long secondarySubCategroyId,
-        string slug, SeoData seoData)
+    public Product(string title, string imageName, string description, long categoryId, long subCategroyId
+        ,long secondarySubCategroyId, IProductDomainService domainService, string slug, SeoData seoData)
     {
+        NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+        Guard(title, slug, description, domainService);
         Title = title;
         ImageName = imageName;
         Description = description;
         CategoryId = categoryId;
         SubCategroyId = subCategroyId;
+
         SecondarySubCategroyId = secondarySubCategroyId;
         Slug = slug.ToSlug();
         SeoData = seoData;
@@ -32,16 +36,14 @@ public class Product:AggregateRoot
     public long SecondarySubCategroyId { get; private set; }
     public string Slug { get; private set; }
     public SeoData SeoData { get; private set; }
-
     public List<ProductImage> Images { get; private set; }
-
     public List<ProductSpecification> Specifications { get; private set; }
 
-    public void Edit(string title, string imageName, string description, long categoryId, long subCategroyId, long secondarySubCategroyId,
-        string slug, SeoData seoData)
+    public void Edit(string title, string description, long categoryId, long subCategroyId
+        , long secondarySubCategroyId, IProductDomainService domainService,string slug, SeoData seoData)
     {
+        Guard(title, slug, description, domainService);
         Title = title;
-        ImageName = imageName;
         Description = description;
         CategoryId = categoryId;
         SubCategroyId = subCategroyId;
@@ -54,6 +56,12 @@ public class Product:AggregateRoot
     {
         image.ProductId = Id;
         Images.Add(image);
+    }
+
+    public void SetProductImage(string imageName)
+    {
+        NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+        ImageName = imageName;
     }
 
     public void RemoveImage(long id)
@@ -70,10 +78,13 @@ public class Product:AggregateRoot
         Specifications = specification;
     }
 
-    public void Guard(string title, string imageNme, string description)
+    public void Guard(string title, string slug, string description,IProductDomainService domainService)
     {
         NullOrEmptyDomainDataException.CheckString(title, nameof(title));
-        NullOrEmptyDomainDataException.CheckString(imageNme, nameof(imageNme));
         NullOrEmptyDomainDataException.CheckString(description, nameof(description));
+        NullOrEmptyDomainDataException.CheckString(Slug, nameof(Slug));
+        if (slug != Slug)
+            if (domainService.SlugIsExist(slug.ToSlug()))
+                throw new SlugIsDuplicateException();
     }
 }

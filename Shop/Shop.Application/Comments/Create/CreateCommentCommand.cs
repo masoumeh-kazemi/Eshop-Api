@@ -1,8 +1,5 @@
-﻿using Common.Application;
+﻿using Common.Applications;
 
 namespace Shop.Application.Comments.Create;
 
-public class CreateCommentCommand:IBaseCommand
-{
-    
-}
+public record CreateCommentCommand(string Text,long UserId, long ProductId) : IBaseCommand;

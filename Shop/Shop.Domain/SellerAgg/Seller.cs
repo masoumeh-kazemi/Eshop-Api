@@ -1,9 +1,9 @@
 ﻿using Common.Domain;
 using Common.Domain.Exeptions;
 
-namespace Shop.Domain.Seller;
+namespace Shop.Domain.SellerAgg;
 
-public class Seller:AggregateRoot
+public class Seller : AggregateRoot
 {
     public long UserId { get; private set; }
     public string ShopName { get; private set; }

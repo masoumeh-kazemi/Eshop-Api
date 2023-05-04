@@ -41,18 +41,50 @@ public class Order:AggregateRoot
 
     public void AddItem(OrderItem item)
     {
+        ChangeOrderGuard();
+        var oldItem = Items.FirstOrDefault(f => f.InventoryId == item.InventoryId);
+        if (oldItem != null)
+        {
+            oldItem.ChangeCount(item.Count + oldItem.Count);
+            return;
+        }
         Items.Add(item);
     }
 
     public void RemoveItem(long itemId)
     {
+        ChangeOrderGuard();
         var currentItem = Items.FirstOrDefault(f => f.Id == itemId);
         if (currentItem != null) 
             Items.Remove(currentItem);
     }
 
+    public void IncreaseItemCount(long itemId, int count)
+    {
+        ChangeOrderGuard();
+        var currentItem = Items.FirstOrDefault(f=> f.Id == itemId);
+        if (currentItem == null)
+            throw new NullOrEmptyDomainDataException();
+        currentItem.IncreaseCount(count);
+    }
+
+    public void DecreaseItemCount(long itemId, int count)
+    {
+        ChangeOrderGuard();
+        var currentItem2 = Items.FirstOrDefault(f => f.Id == itemId);
+
+        if (currentItem2 == null)
+            throw new NullOrEmptyDomainDataException();
+        currentItem2.DecreaseCount(count);
+        var currentItem = Items.FirstOrDefault(f => f.Id == itemId);
+        if (currentItem == null)
+            throw new NullOrEmptyDomainDataException();
+        currentItem.DecreaseCount(count);
+    }
+
     public void ChangeCountItem(long itemId, int newCount)
     {
+        ChangeOrderGuard();
         var currentItem = Items.FirstOrDefault(f => f.Id == itemId);
         if (currentItem == null)
             throw new NullOrEmptyDomainDataException();
@@ -67,6 +99,14 @@ public class Order:AggregateRoot
 
     public void Checkout(OrderAddress orderAddress)
     {
+        ChangeOrderGuard();
         Address = orderAddress;
+    }
+
+    public void ChangeOrderGuard()
+    {
+        //سفارشی که پرداخت شده رو نباید چیزی بهش اضافه کنه
+        if (Status != OrderStatus.Pennding)
+            throw new InvalidDomainDataException("امکان ویرایش این سفارش وجود ندارد");
     }
 }

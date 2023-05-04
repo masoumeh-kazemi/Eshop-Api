@@ -1,4 +1,4 @@
-﻿using Common.Application;
+﻿using Common.Applications;
 using Shop.Domain.CategoryAgg;
 using Shop.Domain.CategoryAgg.Service;
 
@@ -17,7 +17,7 @@ public class CreateCategoryCommandHandler : IBaseCommandHandler<CreateCategoryCo
 
     public async Task<OperationResult> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var category = new Category(request.title, request.slug, request.seoData, _domainService);
+        var category = new Category(request.Title, request.Slug, request.SeoData, _domainService);
         await _repository.Add(category);
         await _repository.Save();
         return OperationResult.Success();

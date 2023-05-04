@@ -1,9 +1,9 @@
 ﻿using Common.Domain;
 using Common.Domain.Exeptions;
 
-namespace Shop.Domain.Seller;
+namespace Shop.Domain.SellerAgg;
 
-public class SellerInventory:BaseEntity
+public class SellerInventory : BaseEntity
 {
     public long SellerId { get; internal set; }
     public long ProductId { get; private set; }

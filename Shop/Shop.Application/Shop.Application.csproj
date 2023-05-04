@@ -8,15 +8,13 @@
 
   <ItemGroup>
     <Folder Include="Categories\Edit\" />
-    <Folder Include="Categories\AddChild\" />
     <Folder Include="Comments\Create\" />
     <Folder Include="Comments\Edit\" />
     <Folder Include="Comments\ChangeStatus\" />
-    <Folder Include="Orders\AddItem\" />
-    <Folder Include="Orders\ChangeCount\" />
+    <Folder Include="Orders\IncreaseItemCount\" />
+    <Folder Include="Orders\DecreaseItemCount\" />
+    <Folder Include="Orders\Checkout\" />
     <Folder Include="Orders\RemoveItem\" />
-    <Folder Include="Products\Create\" />
-    <Folder Include="Products\Edit\" />
     <Folder Include="Products\AddImage\" />
     <Folder Include="Products\RemoveImage\" />
     <Folder Include="Roles\Create\" />
@@ -41,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Applications\Common.Applications.csproj" />
     <ProjectReference Include="..\Shop.Domain\Shop.Domain.csproj" />
   </ItemGroup>
 

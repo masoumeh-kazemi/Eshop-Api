@@ -16,11 +16,14 @@
     <Folder Include="OrderAgg\Repository\" />
     <Folder Include="ProductAgg\Repository\" />
     <Folder Include="RoleAgg\Repository\" />
-    <Folder Include="Seller\Repository\" />
     <Folder Include="OrderAgg\Events\" />
     <Folder Include="SiteEntites\Repositories\" />
     <Folder Include="UserAgg\Enums\" />
     <Folder Include="UserAgg\Repository\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
   </ItemGroup>
 
 </Project>
