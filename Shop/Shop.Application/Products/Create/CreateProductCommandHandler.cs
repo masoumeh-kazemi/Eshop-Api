@@ -1,4 +1,5 @@
-﻿using Common.Applications;
+﻿
+using Common.Applications;
 using Common.Applications._Utilities;
 using Common.Applications.FileUtil.Interfaces;
 using Shop.Domain.ProductAgg;
