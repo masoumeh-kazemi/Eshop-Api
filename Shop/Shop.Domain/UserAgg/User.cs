@@ -8,30 +8,32 @@ namespace Shop.Domain.UserAgg;
 public class User:AggregateRoot
 {
     public User(string name, string family, string phoneNumber, string email, string password,
-        Gender gender, IDomainUserService domainService)
+        Gender gender, IUserDomainService userDomainService)
     {
-        Guard(phoneNumber, email, domainService);
+        Guard(phoneNumber, email, userDomainService);
         Name = name;
         Family = family;
         PhoneNumber = phoneNumber;
         Email = email;
         Password = password;
         Gender = gender;
+        AvatarName = "avatar.png";
     }
     public string Name { get; private set; }
     public string Family { get; private set; }
     public string PhoneNumber { get; private set; }
     public string Email { get; private set; }
     public string Password { get; private set; }
+    public string AvatarName { get; private set; }
     public Gender Gender { get; private set; }
     public List<UserRole> Roles { get; private set; }
     public List<Wallet> Wallets { get; private set; }
     public List<UserAddress> Addresses { get; private set; }
 
     public void Edit(string name, string family, string phoneNumber, string email,
-        Gender gender, IDomainUserService domainService)
+        Gender gender, IUserDomainService userDomainService)
     {
-        Guard(phoneNumber, email, domainService);
+        Guard(phoneNumber, email, userDomainService);
         Name = name;
         Family = family;
         PhoneNumber = phoneNumber;
@@ -39,9 +41,17 @@ public class User:AggregateRoot
         Gender = gender;
     }
 
-    public static User Register(string email,string phoneNumber ,string password, IDomainUserService domainService)
+    public void SetAvatar(string imageName)
     {
-        return new User("", "", phoneNumber, email, password, Enums.Gender.None, domainService);
+        if (string.IsNullOrWhiteSpace(imageName))
+            imageName = "avatar.png";
+
+        AvatarName = imageName;
+    }
+
+    public static User Register(string email,string phoneNumber ,string password, IUserDomainService userDomainService)
+    {
+        return new User("", "", phoneNumber, email, password, Enums.Gender.None, userDomainService);
     }
     public void AddAddress(UserAddress address)
     {
@@ -54,15 +64,19 @@ public class User:AggregateRoot
         var oldAddress = Addresses.FirstOrDefault(f => f.Id == addressId);
         if (oldAddress == null)
             throw new NullOrEmptyDomainDataException("Address Not Found");
+
         Addresses.Remove(oldAddress);
     }
-    public void EditAddress(UserAddress address)
+    public void EditAddress(UserAddress address, long addressId)
     {
-        var oldAddress = Addresses.FirstOrDefault(f=>f.Id == address.Id);
+        var oldAddress = Addresses.FirstOrDefault(f=>f.Id == addressId);
         if (oldAddress == null)
             throw new NullOrEmptyDomainDataException("Address Not Found");
-        Addresses.Remove(oldAddress);
-        Addresses.Add(address);
+
+        oldAddress.Edit(address.Shire, address.City, address.PostalCode, address.PostalAddress, address.PhoneNumber, address.Name
+        ,address.Family,address.NationalCode);
+
+
     }
 
     public void ChargeWallet(Wallet wallet)
@@ -78,7 +92,7 @@ public class User:AggregateRoot
         Roles.AddRange(roles);
     }
 
-    public void Guard(string phoneNumber, string email, IDomainUserService domainService)
+    public void Guard(string phoneNumber, string email, IUserDomainService userDomainService)
     {
         NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
         NullOrEmptyDomainDataException.CheckString(email, nameof(email));
@@ -87,10 +101,10 @@ public class User:AggregateRoot
         if (email.IsValidEmail() == false)
             throw new InvalidDomainDataException("ایمیل ناعتبر است");
         if(phoneNumber != PhoneNumber)
-            if (domainService.PhoneNumberIsExist(phoneNumber))
+            if (userDomainService.PhoneNumberIsExist(phoneNumber))
                 throw new InvalidDomainDataException("شماره موبایل تکراری است");
         if (email != Email)
-            if (domainService.IsEmailExist(email))
+            if (userDomainService.IsEmailExist(email))
                 throw new InvalidDomainDataException("ایمیل تکراری است");
 
     }
