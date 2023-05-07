@@ -18,7 +18,6 @@
     <Folder Include="RoleAgg\Repository\" />
     <Folder Include="OrderAgg\Events\" />
     <Folder Include="SellerAgg\Services\" />
-    <Folder Include="SiteEntites\Repositories\" />
     <Folder Include="UserAgg\Enums\" />
     <Folder Include="UserAgg\Repository\" />
   </ItemGroup>

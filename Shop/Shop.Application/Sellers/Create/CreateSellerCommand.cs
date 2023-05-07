@@ -34,7 +34,7 @@ public class CreateSellerCommandHandler:IBaseCommandHandler<CreateSellerCommand>
     public async Task<OperationResult> Handle(CreateSellerCommand request, CancellationToken cancellationToken)
     {
         var seller = new Seller(request.UserId, request.ShopName, request.NationalCode, _domainService);
-        await _repository.Add(seller);
+        _repository.Add(seller);
         await _repository.Save();
         return OperationResult.Success();
     }

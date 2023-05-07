@@ -28,7 +28,7 @@ public class CreateProductCommandHandler : IBaseCommandHandler<CreateProductComm
             , request.SecondarySubCategroyId, _domainService, request.Slug, request.SeoData);
 
         //for set id
-        await _repository.Add(product);
+        _repository.Add(product);
 
         var specifications = new List<ProductSpecification>();
         request.Specifications.ToList().ForEach(specification =>

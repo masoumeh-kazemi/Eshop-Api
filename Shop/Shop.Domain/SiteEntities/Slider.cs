@@ -1,9 +1,9 @@
 ﻿using Common.Domain;
 using Common.Domain.Exeptions;
 
-namespace Shop.Domain.SiteEntites;
+namespace Shop.Domain.SiteEntities;
 
-public class Slider:BaseEntity
+public class Slider : BaseEntity
 {
     public Slider(string title, string link, string imageName)
     {

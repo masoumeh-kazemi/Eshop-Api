@@ -1,14 +1,14 @@
 ﻿using Common.Domain;
 using Common.Domain.Exeptions;
 
-namespace Shop.Domain.SiteEntites;
+namespace Shop.Domain.SiteEntities;
 
-public class Banner:BaseEntity
+public class Banner : BaseEntity
 {
 
-    public string Link { get;private set; }
-    public string ImageName { get;private set; }
-    public BannerPosition Position { get;private set; }
+    public string Link { get; private set; }
+    public string ImageName { get; private set; }
+    public BannerPosition Position { get; private set; }
 
     public Banner(string link, string imageName, BannerPosition position)
     {
@@ -37,6 +37,6 @@ public class Banner:BaseEntity
 
 public enum BannerPosition
 {
-  زیر_اسلایدر,
-  سمت_راست_اسلایدر
+    زیر_اسلایدر,
+    سمت_راست_اسلایدر
 }
