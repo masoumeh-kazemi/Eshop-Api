@@ -1,5 +1,5 @@
 ﻿using Common.Domain;
-using Common.Domain.Exeptions;
+using Common.Domain.Exceptions;
 using Shop.Domain.SellerAgg.Services;
 
 namespace Shop.Domain.SellerAgg;

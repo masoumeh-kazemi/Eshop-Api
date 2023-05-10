@@ -7,8 +7,8 @@ public class ShippingMethod:ValueObject
     public ShippingMethod(string shippingType, int shippingCost)
     {
         ShippingType = shippingType;
-        this.shippingCost = shippingCost;
+        this.ShippingCost = shippingCost;
     }
     public string ShippingType { get; private set; }
-    public int shippingCost { get; private set; }
+    public int ShippingCost { get; private set; }
 }

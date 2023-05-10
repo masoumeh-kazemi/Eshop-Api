@@ -1,20 +1,20 @@
 ﻿using System.Net.Mime;
 using Common.Domain;
-using Common.Domain.Exeptions;
+using Common.Domain.Exceptions;
 using Common.Domain.Utils;
 using Common.Domain.ValueObjects;
 using Shop.Domain.ProductAgg.Services;
 
 namespace Shop.Domain.ProductAgg;
 
-public class Product:AggregateRoot
+public class Product : AggregateRoot
 {
     private Product()
     {
 
     }
     public Product(string title, string imageName, string description, long categoryId, long subCategroyId
-        ,long secondarySubCategroyId, IProductDomainService domainService, string slug, SeoData seoData)
+        , long secondarySubCategroyId, IProductDomainService domainService, string slug, SeoData seoData)
     {
         NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
         Guard(title, slug, description, domainService);
@@ -40,7 +40,7 @@ public class Product:AggregateRoot
     public List<ProductSpecification> Specifications { get; private set; }
 
     public void Edit(string title, string description, long categoryId, long subCategroyId
-        , long secondarySubCategroyId, IProductDomainService domainService,string slug, SeoData seoData)
+        , long secondarySubCategroyId, IProductDomainService domainService, string slug, SeoData seoData)
     {
         Guard(title, slug, description, domainService);
         Title = title;
@@ -76,11 +76,11 @@ public class Product:AggregateRoot
 
     public void SetSpecification(List<ProductSpecification> specification)
     {
-        specification.ForEach(s=>s.ProductId = Id);
+        specification.ForEach(s => s.ProductId = Id);
         Specifications = specification;
     }
 
-    private void Guard(string title, string slug, string description,IProductDomainService domainService)
+    private void Guard(string title, string slug, string description, IProductDomainService domainService)
     {
         NullOrEmptyDomainDataException.CheckString(title, nameof(title));
         NullOrEmptyDomainDataException.CheckString(description, nameof(description));

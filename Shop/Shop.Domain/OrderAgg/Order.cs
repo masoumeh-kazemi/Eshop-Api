@@ -1,5 +1,5 @@
 ﻿using Common.Domain;
-using Common.Domain.Exeptions;
+using Common.Domain.Exceptions;
 using Shop.Domain.OrderAgg.ValueObjects;
 
 namespace Shop.Domain.OrderAgg;
@@ -13,7 +13,7 @@ public class Order:AggregateRoot
     public Order(long userId)
     {
         UserId = userId;
-        Status = OrderStatus.Pennding;
+        Status = OrderStatus.Pending;
         Items = new List<OrderItem>();
     }
     public long UserId { get; private set; }
@@ -30,7 +30,7 @@ public class Order:AggregateRoot
         {
             var totalPrice = Items.Sum(s => s.TotalPrice);
             if (ShippingMethod != null)
-                totalPrice += ShippingMethod.shippingCost;
+                totalPrice += ShippingMethod.ShippingCost;
             if (Discount != null)
                 totalPrice -= Discount.DiscountAmount;
             return totalPrice;
@@ -65,20 +65,17 @@ public class Order:AggregateRoot
         var currentItem = Items.FirstOrDefault(f=> f.Id == itemId);
         if (currentItem == null)
             throw new NullOrEmptyDomainDataException();
+
         currentItem.IncreaseCount(count);
     }
 
     public void DecreaseItemCount(long itemId, int count)
     {
         ChangeOrderGuard();
-        var currentItem2 = Items.FirstOrDefault(f => f.Id == itemId);
-
-        if (currentItem2 == null)
-            throw new NullOrEmptyDomainDataException();
-        currentItem2.DecreaseCount(count);
         var currentItem = Items.FirstOrDefault(f => f.Id == itemId);
         if (currentItem == null)
             throw new NullOrEmptyDomainDataException();
+
         currentItem.DecreaseCount(count);
     }
 
@@ -93,7 +90,7 @@ public class Order:AggregateRoot
 
     public void ChangeStatus(OrderStatus status)
     {
-        status = Status;
+        Status = status; 
         LastUpdate = DateTime.Now;
     }
 
@@ -106,7 +103,7 @@ public class Order:AggregateRoot
     public void ChangeOrderGuard()
     {
         //سفارشی که پرداخت شده رو نباید چیزی بهش اضافه کنه
-        if (Status != OrderStatus.Pennding)
+        if (Status != OrderStatus.Pending)
             throw new InvalidDomainDataException("امکان ویرایش این سفارش وجود ندارد");
     }
 }

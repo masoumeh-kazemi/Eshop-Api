@@ -17,6 +17,7 @@ public class RemoveOrderItemCommandHandler:IBaseCommandHandler<RemoveOrderItemCo
         var currentOrder = await _repository.GetCurrentUserOrder(request.UserId);
         if (currentOrder == null)
             return OperationResult.NotFound();
+
         currentOrder.RemoveItem(request.ItemId);
         await _repository.Save();
         return OperationResult.Success();

@@ -1,5 +1,5 @@
 ﻿using Common.Domain;
-using Common.Domain.Exeptions;
+using Common.Domain.Exceptions;
 
 namespace Shop.Domain.RoleAgg;
 

@@ -1,5 +1,6 @@
 ﻿using Common.Domain;
-using Common.Domain.Exeptions;
+using Common.Domain.Exceptions;
+using Common.Domain.ValueObjects;
 using Shop.Domain.UserAgg.Enums;
 using Shop.Domain.UserAgg.Services;
 
@@ -49,9 +50,9 @@ public class User:AggregateRoot
         AvatarName = imageName;
     }
 
-    public static User Register(string email,string phoneNumber ,string password, IUserDomainService userDomainService)
+    public static User Register(string phoneNumber ,string password, IUserDomainService userDomainService)
     {
-        return new User("", "", phoneNumber, email, password, Enums.Gender.None, userDomainService);
+        return new User("", "", phoneNumber, null, password, Enums.Gender.None, userDomainService);
     }
     public void AddAddress(UserAddress address)
     {
