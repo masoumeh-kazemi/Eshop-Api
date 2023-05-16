@@ -18,3 +18,4 @@ public class QueryFilter<TResponse, TParam> : IQuery<TResponse>
         FilterParams = filterParams;
     }
 }
+

@@ -1,32 +1,35 @@
 ﻿using Common.Query;
+using Common.Query.Filter;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shop.Infrastructure.Persistent.Ef;
-using Shop.Query.Comments.DTOs;
+using Shop.Query.Orders.DTOs;
 
-namespace Shop.Query.Comments.GetByFilter;
+namespace Shop.Query.Orders.GetByFilter;
 
-public class GetCommentByFilterQuery : QueryFilter<CommentFilterResult, CommentFilterParams>
+public class GetOrdersByFilterQuery : QueryFilter<OrderFilterResult, OrderFilterParams>
 {
-    public GetCommentByFilterQuery(CommentFilterParams filterParams) : base(filterParams)
+    public GetOrdersByFilterQuery(OrderFilterParams filterParams) : base(filterParams)
     {
     }
 }
 
-internal class GetCommentByFilterQueryHandler : IQueryHandler<GetCommentByFilterQuery, CommentFilterResult>
+public class GetOrdersByFilterQueryHandler : IQueryHandler<GetOrdersByFilterQuery, OrderFilterResult>
 {
     private readonly ShopContext _context;
 
-    public GetCommentByFilterQueryHandler(ShopContext context)
+    public GetOrdersByFilterQueryHandler(ShopContext context)
     {
         _context = context;
     }
 
-    public async Task<CommentFilterResult> Handle(GetCommentByFilterQuery request, CancellationToken cancellationToken)
+    public async Task<OrderFilterResult> Handle(GetOrdersByFilterQuery request, CancellationToken cancellationToken)
     {
         var @params = request.FilterParams;
-        var result = _context.Comments.OrderByDescending(d => d.CreationDate).AsQueryable();
-        if (@params.CommentStatus != null)
-            result = result.Where(r => r.Status == @params.CommentStatus);
+        var result = _context.Orders.OrderByDescending(d => d.Id).AsQueryable();
+
+        if (@params.Status != null)
+            result = result.Where(r => r.Status == @params.Status);
 
         if (@params.UserId != null)
             result = result.Where(r => r.UserId == @params.UserId);
@@ -38,15 +41,14 @@ internal class GetCommentByFilterQueryHandler : IQueryHandler<GetCommentByFilter
             result = result.Where(r => r.CreationDate.Date <= @params.EndDate.Value.Date);
 
         var skip = (@params.PageId - 1) * @params.Take;
-        var model = new CommentFilterResult()
+        var model = new OrderFilterResult()
         {
             Data = await result.Skip(skip).Take(@params.Take)
-                .Select(comment=> comment.MapFilterComment())
+                .Select(order => order.MapFilterData(_context))
                 .ToListAsync(cancellationToken),
             FilterParams = @params
         };
         model.GeneratePaging(result, @params.Take, @params.PageId);
         return model;
-
     }
 }

@@ -8,7 +8,6 @@ public class CommentDto : BaseDto
 {
     public long UserId { get; set; }
     public long ProductId { get; set; }
-
     public string UserFullName { get; set; }
     public string ProductTitle { get; set; }
     public string Text { get; set; }
