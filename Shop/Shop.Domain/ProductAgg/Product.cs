@@ -33,14 +33,14 @@ public class Product : AggregateRoot
     public string Description { get; private set; }
     public long CategoryId { get; private set; }
     public long SubCategroyId { get; private set; }
-    public long SecondarySubCategroyId { get; private set; }
+    public long? SecondarySubCategroyId { get; private set; }
     public string Slug { get; private set; }
     public SeoData SeoData { get; private set; }
     public List<ProductImage> Images { get; private set; }
     public List<ProductSpecification> Specifications { get; private set; }
 
     public void Edit(string title, string description, long categoryId, long subCategroyId
-        , long secondarySubCategroyId, IProductDomainService domainService, string slug, SeoData seoData)
+        , long? secondarySubCategroyId, IProductDomainService domainService, string slug, SeoData seoData)
     {
         Guard(title, slug, description, domainService);
         Title = title;

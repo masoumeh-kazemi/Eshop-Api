@@ -23,3 +23,17 @@ public class CreateCategoryCommandHandler : IBaseCommandHandler<CreateCategoryCo
         return OperationResult.Success();
     }
 }
+
+//public class IBaseCommand : IRequst<OperationResult>
+//{//}
+//public class IBaseCommandHandler<TCommand> : IRequestHandler<TCommand, OperationResult> where TCommand IBaseCommand
+//{//}
+
+//public record CreateCategoryCommand(string Title) : IBaseCommand;
+//public class CreateCategoryCommandHandler() : IBaseCommandHandler<CreatecommandHandler>
+//{
+//  public Task<OperationResult> Handle(CreateCategoryCommand requst)
+// {
+//}
+//}
+//
